@@ -1,0 +1,68 @@
+### DENNE SKAL BRUKES 
+
+import numpy as np
+from matplotlib import pyplot as plt
+# Define demand and marginal revenue functions for GER
+def demand_ger(Qu):
+    return 49500 - 75*Qu
+
+def marginalrevenue_ger(Qu):
+    return 49500 - 150*Qu
+
+# Define demand and marginal revenue functions for NOR
+def demand_nor(Qe):
+    return 37500 - 75*Qe
+
+def marginalrevenue_nor(Qe):
+    return 37500 - 150*Qe
+
+# Define the marginal cost and profit maximizing quantity for GER
+marginalcost_ger = 500
+quantity_ger = (49500 - marginalcost_ger) / 150
+price_ger = demand_ger(quantity_ger)
+
+# Define the marginal cost and profit maximizing quantity for NOR
+marginalcost_nor = 500
+quantity_nor = (37500 - marginalcost_nor) / 150
+price_nor = demand_nor(quantity_nor)
+
+# Define a range of quantity values to plot
+Q = np.linspace(0,7000,5000)
+
+# Create two subplots side by side
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 5))
+fig.suptitle('Price for a round trip with the Hurtigruten coastal route on the 4th of May', fontsize=16)
+
+# Plot the demand and marginal revenue curves for GER
+ax1.plot(Q, demand_ger(Q), label='GER Demand')
+ax1.plot(Q, marginalrevenue_ger(Q), label='GER Marginal Revenue')
+ax1.axhline(y=marginalcost_ger, color='black', label='GER Marginal Cost') # Add marginal cost line
+ax1.axvline(x=quantity_ger, linestyle='--', color='black', label='GER Quantity')
+ax1.plot([0, quantity_ger], [price_ger, price_ger], 'k--', label='GER Price') # Add dotted line for GER Price
+ax1.set_xlabel('Quantity')
+ax1.set(ylim=(0,50000),xlim=(0,700))
+ax1.set_ylabel('Price')
+ax1.set_title('GER Market')
+ax1.set_ylim([0, None]) # Set y-axis limit to only positive values
+ax1.legend()
+
+# Plot the demand and marginal revenue curves for NOR
+ax2.plot(Q, demand_nor(Q), label='NOR Demand')
+ax2.plot(Q, marginalrevenue_nor(Q), label='NOR Marginal Revenue')
+ax2.axhline(y=marginalcost_nor, color='black', label='NOR Marginal Cost') # Add marginal cost line
+ax2.axvline(x=quantity_nor, linestyle='--', color='black', label='NOR Quantity')
+ax2.plot([0, quantity_nor], [price_nor, price_nor], 'k--', label='NOR Price') # Add dotted line for NOR Price
+ax2.set_xlabel('Quantity')
+ax2.set(ylim=(0,50000),xlim=(0,600))
+ax2.set_ylabel('Price')
+ax2.set_title('NOR Market')
+ax2.set_ylim([0, None]) # Set y-axis limit to only positive values
+ax2.legend()
+ax1.text(0.2, -0.2, f"Optimal quantity: {quantity_ger:.2f}", transform=ax1.transAxes)
+ax2.text(0.2, -0.2, f"Optimal quantity: {quantity_nor:.2f}", transform=ax2.transAxes)
+ax1.text(0.2, -0.3, f"Optimal price: {price_ger:.2f}", transform=ax1.transAxes)
+ax2.text(0.2, -0.3, f"Optimal price: {price_nor:.2f}", transform=ax2.transAxes)
+
+# Adjust the layout of subplots and display the graph
+plt.tight_layout()
+plt.show()
