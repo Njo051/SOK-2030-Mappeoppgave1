@@ -1,0 +1,121 @@
+### DENNE SKAL BRUKES 
+import numpy as np
+from matplotlib import pyplot as plt
+
+# Define demand and marginal revenue functions for GER
+def demand_ger(Qu):
+    return 49500 - 75*Qu
+
+def marginalrevenue_ger(Qu):
+    return 49500 - 150*Qu
+
+# Define demand and marginal revenue functions for NOR
+def demand_nor(Qe):
+    return 37500 - 75*Qe
+
+def marginalrevenue_nor(Qe):
+    return 37500 - 150*Qe
+
+# Define the marginal cost and profit maximizing quantity for GER
+marginalcost_ger = 500
+quantity_ger = (49500 - marginalcost_ger) / 150
+price_ger = demand_ger(quantity_ger)
+
+# Define the marginal cost and profit maximizing quantity for NOR
+marginalcost_nor = 500
+quantity_nor = (37500 - marginalcost_nor) / 150
+price_nor = demand_nor(quantity_nor)
+
+# Define a range of quantity values to plot
+Q = np.linspace(0,7000,5000)
+
+# Calculate consumer and producer surplus for GER
+consumer_surplus_ger = ((price_ger - demand_ger(0)) * quantity_ger) / 2
+producer_surplus_ger = ((demand_ger(0) - marginalcost_ger) * quantity_ger) / 2
+
+# Calculate consumer and producer surplus for NOR
+consumer_surplus_nor = ((price_nor - demand_nor(0)) * quantity_nor) / 2
+producer_surplus_nor = ((demand_nor(0) - marginalcost_nor) * quantity_nor) / 2
+
+#Define the uniform pricing for both market
+
+def uniformprice(p):
+    return 22000
+
+def uniformquantity_ger(p):
+    return 366
+
+def uniformquantity_nor(p):
+    return 207
+
+
+# Create two subplots side by side
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 5))
+fig.suptitle('Price for a round trip with the Hurtigruten coastal route on the 4th of May', fontsize=16)
+
+# Plot the demand and marginal revenue curves for GER
+ax1.plot(Q, demand_ger(Q), label='GER Demand')
+ax1.plot(Q, marginalrevenue_ger(Q), label='GER Marginal Revenue')
+ax1.axhline(y=marginalcost_ger, color='black', label='GER Marginal Cost') # Add marginal cost line
+ax1.plot([quantity_ger, quantity_ger], [0, price_ger], 'k--', label='GER Quantity')
+ax1.plot([0, quantity_ger], [price_ger, price_ger], 'k--', label='GER Price') # Add dotted line for GER Price
+#ax1.fill_between(Q, demand_ger(Q), price_ger, where=(Q<=quantity_ger), alpha=0.1, color='green', label='GER Consumer Surplus')
+#ax1.fill_between(Q, marginalcost_ger, demand_ger(Q), where=(Q<=quantity_ger), alpha=0.1, color='orange', label='GER Producer Surplus')
+ax1.set_xlabel('Quantity')
+ax1.set(ylim=(0,50000),xlim=(0,700))
+ax1.set_ylabel('Price')
+ax1.set_title('German Market')
+ax1.set_ylim([0, None]) # Set y-axis limit to only positive values
+ax1.legend()
+
+# Plot the demand and marginal revenue curves for GER
+ax2.plot(Q, demand_nor(Q), label='NOR Demand')
+ax2.plot(Q, marginalrevenue_nor(Q), label='NOR Marginal Revenue')
+ax2.axhline(y=marginalcost_nor, color='black', label='NOR Marginal Cost') # Add marginal cost line
+ax2.plot([quantity_nor, quantity_nor], [0, price_nor], 'k--', label='NOR Quantity')
+ax2.plot([0, quantity_nor], [price_nor, price_nor], 'k--', label='NOR Price') # Add dotted line for GER Price
+#ax2.fill_between(Q, demand_nor(Q), price_nor, where=(Q<=quantity_nor), alpha=0.1, color='green', label='NOR Consumer Surplus')
+#ax2.fill_between(Q, marginalcost_nor, demand_nor(Q), where=(Q<=quantity_nor), alpha=0.1, color='orange', label='NOR Producer Surplus')
+ax2.set_xlabel('Quantity')
+ax2.set(ylim=(0,50000),xlim=(0,700))
+ax2.set_ylabel('Price')
+ax2.set_title('Norwegian Market')
+ax2.set_ylim([0, None]) # Set y-axis limit to only positive values
+ax2.legend()
+ax1.axhline(y=22000,xmax=0.52,linestyle='--', label='Uniform Price')
+ax2.axhline(y=22000,xmax=0.29, linestyle='--', label='Uniform Price')
+
+# Legger til den vertikale linjen
+ax1.axvline(x=366, ymax= 0.44,linestyle='--', label='Optimal Amount')
+ax2.axvline(x=206, ymax= 0.44,linestyle='--', label='Optimal Amount')
+
+#y=.5, xmin=0.25, xmax=0.75
+
+ax1.text(0.2, -0.2, f"Optimal quantity: {quantity_ger:.2f}", transform=ax1.transAxes)
+ax2.text(0.2, -0.2, f"Optimal quantity: {quantity_nor:.2f}", transform=ax2.transAxes)
+ax1.text(0.2, -0.3, f"Optimal price: {price_ger:.2f}", transform=ax1.transAxes)
+ax2.text(0.2, -0.3, f"Optimal price: {price_nor:.2f}", transform=ax2.transAxes)
+
+ax2.text(217, 10000, 'G', fontsize = 12)
+ax2.text(90, 20000, 'L', fontsize = 12)
+ax2.text(209, 19600, 'C', fontsize = 10)
+
+ax1.text(337, 10000, 'G', fontsize = 12)
+ax1.text(110, 23000, 'L', fontsize = 12)
+ax1.text(330, 22500, 'C', fontsize = 10)
+
+
+# Names to the different values along the axis for plot Germany.
+ax1.text(350, -2000, '367', fontsize = 9)
+ax1.text(313, -2000, '327', fontsize = 9)
+
+ax1.text(-55, 22000, '22000', fontsize = 9)
+ax1.text(-55, 25000, '25000', fontsize = 9)
+
+
+# Names to the different values along the axis for plot Norway.
+ax2.text(245, -1400, '247', fontsize = 8)
+ax2.text(200, -1300, '207', fontsize = 8)
+
+ax2.text(-55, 22000, '22000', fontsize = 9)
+ax2.text(-55, 18000, '19000', fontsize = 9)
