@@ -119,3 +119,11 @@ ax2.text(200, -1300, '207', fontsize = 8)
 
 ax2.text(-55, 22000, '22000', fontsize = 9)
 ax2.text(-55, 18000, '19000', fontsize = 9)
+
+# Adding KO and PO to the two plotts
+ax1.text(150, 30000, 'KO', fontsize = 11)
+ax1.text(150, 12000, 'PO', fontsize = 11)
+
+# Adding KO and PO to the two plotts
+ax2.text(105, 24000, 'KO', fontsize = 11)
+ax2.text(100, 11000, 'PO', fontsize = 11)
