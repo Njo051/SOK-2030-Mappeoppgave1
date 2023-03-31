@@ -1,0 +1,96 @@
+import numpy as np
+from matplotlib import pyplot as plt
+### DENNE SKAL BRUKES 
+def demand_tyskland(p):
+    return ((49500 - p)/75)
+
+def demand_norge(p):
+    return ((37500 - p)/75)
+
+def m_demand(p):
+    w=demand_tyskland(p)
+    z=demand_norge(p)
+    sum = (z<0)*w + (z>=0)*(z+w)    
+    return sum
+
+def mr_norge(p):
+    return ((37500 - p)/150)
+
+def mr_ger(p):
+    return ((49500 - p)/150)
+
+def mr_aggnorge(p):
+    return ((43500-p)/75)
+
+def m_ager(p):
+    return ((49500 - p)/75)
+def m_anor(p):
+    return ((43500 - p)/37.5)
+
+
+
+Q = np.linspace(0,31000,100)
+Y = np.linspace(25000, 49500,100)
+
+Z=np.linspace(38200, 49500,100)
+N=np.linspace(0, 37950,100)
+
+# Tegne individuell etterspørsel og den horisontale summen
+
+p_num = np.linspace(0,50000,100)
+
+fig, axs = plt.subplots(1,3, figsize=(20,5))
+
+# plott av linjene
+
+axs[1].plot(demand_norge(p_num),p_num,label='NOR demand')
+axs[1].plot(mr_norge(p_num),p_num,label='NOR Marginal Revenue')
+axs[1].axvline(x=206, ymax= 0.44,color='black',linewidth = 1,linestyle='--')
+axs[1].axhline(y=22000, xmax= 0.2,color='black',linewidth = 1,linestyle='--')
+axs[1].set_title('Norway')
+
+axs[0].plot(demand_tyskland(p_num),p_num,label='GER demand')
+axs[0].plot(mr_ger(p_num),p_num,label='GER Marginal Revenue')
+axs[0].axvline(x=366,ymax= 0.44,color='black',linewidth = 1,linestyle='--')
+axs[0].axhline(y=22000, xmax= 0.37,color='black',linewidth = 1,linestyle='--')
+axs[0].set_title('Germany')
+
+
+axs[2].plot(m_demand(p_num),p_num,label='Aggregate Market Demand')
+axs[2].plot(mr_aggnorge(Q),Q, color='k', linewidth=2)
+axs[2].plot(mr_ger(Y),Y, color='k', linewidth=2, label = 'Marginal Revenue')
+axs[2].axvline(x=162,ymin= 0.62, ymax= 0.5,linewidth = 2,linestyle='--')
+axs[2].axhline(y=22000, xmax= 0.57,linewidth = 1,linestyle='--')
+axs[2].axvline(x=573, ymax= 0.44,linewidth = 1,linestyle='--')
+axs[2].set_title('Aggregate')
+
+# bruk løkke for å tegne aksene
+
+for i in range(3):
+
+    axs[i].set_ylabel('Price (NOK) ')
+    axs[i].set_xlabel('Amount of passengers')
+    axs[i].set(ylim=(0,50000),xlim=(0,1000))
+    axs[i].spines['top'].set_color('none')
+    axs[i].spines['right'].set_color('none')
+    axs[i].legend(loc='best', frameon=False)
+
+# Names to the different values along the axis for plot Germany.
+axs[0].text(350, -1500, '367', fontsize = 8)
+
+axs[0].text(-90, 22000, '22000', fontsize = 9)
+
+
+# Names to the different values along the axis for plot Norway.
+axs[1].text(200, -1300, '207', fontsize = 8)
+
+axs[1].text(-98, 21500, '22000', fontsize = 9)
+
+# Names to the different values along the axis for plot Norway.
+axs[2].text(540, -1400, '573', fontsize = 8)
+
+axs[2].text(-95, 22000, '22000', fontsize = 9)
+
+fig.suptitle('Hurtigrutens Demand for the German and Norwegian Market with Uniform pricing')
+
+plt.show()
